@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -15,7 +15,8 @@
   <ItemGroup>
     <ProjectReference Include="..\QuickOrder.Application\QuickOrderPedido.Application.csproj" />
     <ProjectReference Include="..\QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj" />
-    <ProjectReference Include="..\QuickOrderPedido.Infra\QuickOrderPedido.Infra.csproj" />
+    <ProjectReference Include="..\QuickOrderPedido.Infra.Gateway\QuickOrderPedido.Infra.Gateway.csproj" />
+    <ProjectReference Include="..\QuickOrderPedido.Infra.MQ\QuickOrderPedido.Infra.MQ.csproj" />
   </ItemGroup>
 
 </Project>

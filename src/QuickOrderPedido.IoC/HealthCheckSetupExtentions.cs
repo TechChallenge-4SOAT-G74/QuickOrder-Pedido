@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using QuickOrderPedido.Infra.Core;
+using QuickOrderPedido.Infra.Gateway.Core;
 
 
 namespace QuickOrderPedido.IoC

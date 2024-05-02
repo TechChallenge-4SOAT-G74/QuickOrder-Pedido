@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using QuickOrderPedido.Application.Events;
 using QuickOrderPedido.Application.UseCases;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Adapters;
-using QuickOrderPedido.Infra.Core;
 using QuickOrderPedido.Infra.Gateway;
+using QuickOrderPedido.Infra.Gateway.Core;
+using QuickOrderPedido.Infra.MQ;
 
 namespace QuickOrderPedido.IoC
 {
@@ -15,6 +17,8 @@ namespace QuickOrderPedido.IoC
 
             services.AddImplementations(ServiceLifetime.Scoped, typeof(IBaseUseCase), assemblyTypes);
 
+            services.AddSingleton(typeof(IRabbitMqPub<>), typeof(RabbitMqPub<>));
+            services.AddSingleton<IProcessaEvento, ProcessaEvento>();
 
             //Repositories MongoDB
             services.AddSingleton<IMondoDBContext, MondoDBContext>();

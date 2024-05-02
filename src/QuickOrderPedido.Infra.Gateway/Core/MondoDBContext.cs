@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace QuickOrderPedido.Infra.Core
+namespace QuickOrderPedido.Infra.Gateway.Core
 {
     public class MondoDBContext : IMondoDBContext
     {

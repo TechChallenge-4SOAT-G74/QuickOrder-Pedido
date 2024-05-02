@@ -11,7 +11,7 @@ WORKDIR /src
 COPY ["QuickOrderPedido.Api/QuickOrderPedido.Api.csproj", "QuickOrderPedido.Api/"]
 COPY ["QuickOrderPedido.Application/QuickOrderPedido.Application.csproj", "QuickOrderPedido.Application/"]
 COPY ["QuickOrderPedido.Domain/QuickOrderPedido.Domain.csproj", "QuickOrderPedido.Domain/"]
-COPY ["QuickOrderPedido.Infra/QuickOrderPedido.Infra.csproj", "QuickOrderPedido.Infra/"]
+COPY ["QuickOrderPedido.Infra.Gateway/QuickOrderPedido.Infra.Gateway.csproj", "QuickOrderPedido.Infra.Gateway/"]
 COPY ["QuickOrderPedido.IoC/QuickOrderPedido.IoC.csproj", "QuickOrderPedido.IoC/"]
 
 RUN dotnet restore "./QuickOrderPedido.Api/./QuickOrderPedido.Api.csproj"

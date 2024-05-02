@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using QuickOrderPedido.Api.Configurations;
-using QuickOrderPedido.Infra.Core;
+using QuickOrderPedido.Infra.Gateway.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 

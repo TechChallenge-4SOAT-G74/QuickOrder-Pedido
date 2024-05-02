@@ -4,7 +4,7 @@ using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
 using ServiceStack;
 
-namespace QuickOrderPedido.Infra.Core
+namespace QuickOrderPedido.Infra.Gateway.Core
 {
     public abstract class BaseMongoDBRepository<TEntity> : IBaseMongoDBRepository<TEntity> where TEntity : EntityMongoBase
     {

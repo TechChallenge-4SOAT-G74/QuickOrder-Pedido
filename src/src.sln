@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.IoC", "QuickOrderPedido.IoC\QuickOrderPedido.IoC.csproj", "{99F21804-5F8B-49DE-9D13-D27A3568BFCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Infra", "QuickOrderPedido.Infra\QuickOrderPedido.Infra.csproj", "{55DEBCFD-B309-4CAE-9F87-7EB01673651F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Infra.Gateway", "QuickOrderPedido.Infra.Gateway\QuickOrderPedido.Infra.Gateway.csproj", "{55DEBCFD-B309-4CAE-9F87-7EB01673651F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Infra.MQ", "QuickOrderPedido.Infra.MQ\QuickOrderPedido.Infra.MQ.csproj", "{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{55DEBCFD-B309-4CAE-9F87-7EB01673651F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55DEBCFD-B309-4CAE-9F87-7EB01673651F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55DEBCFD-B309-4CAE-9F87-7EB01673651F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

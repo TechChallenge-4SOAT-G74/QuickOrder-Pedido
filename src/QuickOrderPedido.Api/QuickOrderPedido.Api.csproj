@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QuickOrderPedido.Infra.Gateway\QuickOrderPedido.Infra.Gateway.csproj" />
     <ProjectReference Include="..\QuickOrderPedido.IoC\QuickOrderPedido.IoC.csproj" />
   </ItemGroup>
 

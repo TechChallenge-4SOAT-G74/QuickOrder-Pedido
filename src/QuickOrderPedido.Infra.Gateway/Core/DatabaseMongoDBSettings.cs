@@ -1,4 +1,4 @@
-﻿namespace QuickOrderPedido.Infra.Core
+﻿namespace QuickOrderPedido.Infra.Gateway.Core
 {
     public class DatabaseMongoDBSettings
     {
