@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Api", "QuickOrderPedido.Api\QuickOrderPedido.Api.csproj", "{930B0861-FE1B-4C83-9AA3-4C1FC42474C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Api", "QuickOrderPedido.Api\QuickOrderPedido.Api.csproj", "{930B0861-FE1B-4C83-9AA3-4C1FC42474C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Application", "QuickOrder.Application\QuickOrderPedido.Application.csproj", "{DC097C7A-93F9-4380-B2A0-F331394B3611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Application", "QuickOrder.Application\QuickOrderPedido.Application.csproj", "{DC097C7A-93F9-4380-B2A0-F331394B3611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Domain", "QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj", "{4F7598F0-86F0-4C47-99E9-F10C07601C87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Domain", "QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj", "{4F7598F0-86F0-4C47-99E9-F10C07601C87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.IoC", "QuickOrderPedido.IoC\QuickOrderPedido.IoC.csproj", "{99F21804-5F8B-49DE-9D13-D27A3568BFCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.IoC", "QuickOrderPedido.IoC\QuickOrderPedido.IoC.csproj", "{99F21804-5F8B-49DE-9D13-D27A3568BFCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Infra.Gateway", "QuickOrderPedido.Infra.Gateway\QuickOrderPedido.Infra.Gateway.csproj", "{55DEBCFD-B309-4CAE-9F87-7EB01673651F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Infra.Gateway", "QuickOrderPedido.Infra.Gateway\QuickOrderPedido.Infra.Gateway.csproj", "{55DEBCFD-B309-4CAE-9F87-7EB01673651F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Infra.MQ", "QuickOrderPedido.Infra.MQ\QuickOrderPedido.Infra.MQ.csproj", "{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Infra.MQ", "QuickOrderPedido.Infra.MQ\QuickOrderPedido.Infra.MQ.csproj", "{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickOrderPedido.Tests", "QuickOrderPedido.Tests\QuickOrderPedido.Tests.csproj", "{F25BD721-34C5-44EE-9F25-B8AC1E942108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3040AECD-CB18-43BA-BF3F-BED7A31DBFF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F25BD721-34C5-44EE-9F25-B8AC1E942108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F25BD721-34C5-44EE-9F25-B8AC1E942108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F25BD721-34C5-44EE-9F25-B8AC1E942108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F25BD721-34C5-44EE-9F25-B8AC1E942108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
