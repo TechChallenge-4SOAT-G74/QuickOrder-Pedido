@@ -5,7 +5,7 @@ using QuickOrderPedido.Domain.Entities;
 
 namespace QuickOrderPedido.Application.UseCases.Interfaces
 {
-    public interface IPedidoAtualizarUseCase : IBaseUseCase
+    public interface IPedidoAtualizarUseCase
     {
         Task<ServiceResult> AlterarItemAoPedido(string id, List<ProdutoCarrinho> pedidoDto);
         Task<ServiceResult> AlterarStatusPedido(int id, string pedidoStatus);

@@ -1,18 +1,15 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace QuickOrderPedido.Application.Events
+﻿namespace QuickOrderPedido.Application.Events
 {
     public class ProcessaEvento : IProcessaEvento
     {
-        private readonly IMapper _mapper;
-        private readonly IServiceScopeFactory _scopeFactory;
+        //private readonly IMapper _mapper;
+        //private readonly IServiceScopeFactory _scopeFactory;
 
-        public ProcessaEvento(IMapper mapper, IServiceScopeFactory scopeFactory)
-        {
-            _mapper = mapper;
-            _scopeFactory = scopeFactory;
-        }
+        //public ProcessaEvento(IMapper mapper, IServiceScopeFactory scopeFactory)
+        //{
+        //    _mapper = mapper;
+        //    _scopeFactory = scopeFactory;
+        //}
 
         public void Processa(string mensagem)
         {

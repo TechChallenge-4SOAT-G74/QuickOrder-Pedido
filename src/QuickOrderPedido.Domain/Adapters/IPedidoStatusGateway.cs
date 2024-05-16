@@ -2,7 +2,7 @@
 
 namespace QuickOrderPedido.Domain.Adapters
 {
-    public interface ICarrinhoGateway : IBaseGateway, IBaseMongoDBRepository<Carrinho>
+    public interface IPedidoStatusGateway : IBaseGateway, IBaseMongoDBRepository<PedidoStatus>
     {
     }
 }

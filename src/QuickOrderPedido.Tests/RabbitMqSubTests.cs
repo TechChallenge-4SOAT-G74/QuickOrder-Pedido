@@ -4,10 +4,7 @@ using QuickOrderPedido.Application.Events;
 using QuickOrderPedido.Infra.MQ;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace QuickOrderPedido.Tests
@@ -27,7 +24,7 @@ namespace QuickOrderPedido.Tests
             var rabbitMqSub = new RabbitMqSub(configuration, processaEventoMock.Object);
 
             connectionMock.Setup(c => c.CreateModel()).Returns(channelMock.Object);
-            //channelMock.Setup(c => c.QueueDeclare().QueueName).Returns("queueName");
+            channelMock.Setup(c => c.QueueDeclare("queueName", false, false,true, null).QueueName).Returns("queueName");
             channelMock.Setup(c => c.BasicConsume(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<IBasicConsumer>()))
                 .Callback<string, bool, IBasicConsumer>((queue, autoAck, consumer) =>
                 {

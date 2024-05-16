@@ -8,7 +8,7 @@ namespace QuickOrderPedido.Api.Configurations
     {
         public static void RegisterPedidoEndpoints(this WebApplication app)
         {
-            app.MapGet("/consultarpedido/{id}", async ([FromServices] IPedidoObterUseCase pedidoObterUseCase, int id) =>
+            app.MapGet("/consultarpedido/{id}", async ([FromServices] IPedidoObterUseCase pedidoObterUseCase, string id) =>
             {
                 return Results.Ok(await pedidoObterUseCase.ConsultarPedido(id));
             });

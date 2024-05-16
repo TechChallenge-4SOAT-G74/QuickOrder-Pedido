@@ -2,7 +2,7 @@
 
 namespace QuickOrderPedido.Application.UseCases.Interfaces
 {
-    public interface IPedidoCriarUseCase : IBaseUseCase
+    public interface IPedidoCriarUseCase
     {
         Task<ServiceResult> CriarPedido(int? numeroCliente = null);
     }

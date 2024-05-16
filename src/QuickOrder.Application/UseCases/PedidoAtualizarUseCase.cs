@@ -1,7 +1,6 @@
 ﻿
 using QuickOrderPedido.Application.Dtos.Base;
 using QuickOrderPedido.Application.UseCases.Interfaces;
-using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
 
 namespace QuickOrderPedido.Application.UseCases
@@ -20,7 +19,7 @@ namespace QuickOrderPedido.Application.UseCases
         //    var result = new ServiceResult();
         //    try
         //    {
-        //        var carrinho = await _carrinhoGateway.GetValue("NumeroPedido", id);
+        //        var carrinho = await _carrinhoGateway.GetValue("CodigoPedido", id);
 
         //        if (carrinho == null)
         //        {
@@ -46,7 +45,7 @@ namespace QuickOrderPedido.Application.UseCases
         //    var result = new ServiceResult();
         //    try
         //    {
-        //        var pedido = await _pedidoStatusGateway.GetValue("NumeroPedido", id.ToString());
+        //        var pedido = await _pedidoStatusGateway.GetValue("CodigoPedido", id.ToString());
 
         //        if (pedido == null)
         //        {
@@ -83,8 +82,8 @@ namespace QuickOrderPedido.Application.UseCases
 
         //        await _pedidoGateway.Update(pedido);
 
-        //        var sacolaDto = new SacolaDto { NumeroCliente = pedido.ClienteId.ToString(), NumeroPedido = pedido.NumeroPedido.ToString(), CarrinhoId = pedido.CarrinhoId, Valor = pedido.ValorPedido };
-        //        await _pagamentoUseCase.AtualizarStatusPagamento(pedido.NumeroPedido.ToString(), (int)EStatusPagamento.Aprovado);
+        //        var sacolaDto = new SacolaDto { NumeroCliente = pedido.ClienteId.ToString(), CodigoPedido = pedido.CodigoPedido.ToString(), CarrinhoId = pedido.CarrinhoId, Valor = pedido.ValorPedido };
+        //        await _pagamentoUseCase.AtualizarStatusPagamento(pedido.CodigoPedido.ToString(), (int)EStatusPagamento.Aprovado);
 
         //    }
         //    catch (Exception ex)
@@ -100,7 +99,7 @@ namespace QuickOrderPedido.Application.UseCases
         //    try
         //    {
         //        var pedido = await _pedidoGateway.GetFirst(id);
-        //        var carrinho = await _carrinhoGateway.GetValue("NumeroPedido", id.ToString());
+        //        var carrinho = await _carrinhoGateway.GetValue("CodigoPedido", id.ToString());
 
         //        if (pedido == null || carrinho == null)
         //        {
@@ -118,12 +117,12 @@ namespace QuickOrderPedido.Application.UseCases
 
         //        await _pedidoGateway.Update(pedido);
 
-        //        var pedidoStatusExiste = await _pedidoStatusGateway.GetValue("NumeroPedido", id.ToString());
+        //        var pedidoStatusExiste = await _pedidoStatusGateway.GetValue("CodigoPedido", id.ToString());
 
         //        if (pedidoStatusExiste == null)
         //        {
         //            var pedidoStatus = new PedidoStatus(
-        //                pedido.NumeroPedido,
+        //                pedido.CodigoPedido,
         //                EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.PendentePagamento),
         //                DateTime.Now);
 
@@ -135,7 +134,7 @@ namespace QuickOrderPedido.Application.UseCases
         //            _pedidoStatusGateway.Update(pedidoStatusExiste);
         //        }
 
-        //        result = await _pagamentoUseCase.GerarQrCodePagamento(pedido.NumeroPedido);
+        //        result = await _pagamentoUseCase.GerarQrCodePagamento(pedido.CodigoPedido);
         //    }
         //    catch (Exception ex)
         //    {

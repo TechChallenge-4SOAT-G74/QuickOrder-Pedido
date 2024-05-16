@@ -23,10 +23,10 @@ namespace QuickOrderPedido.Application.UseCases
             try
             {
 
-                //var numeroPedido = _pedidoGateway.GetAll().Result.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;
-                //var carrinho = new Carrinho(numeroPedido, numeroCliente, 0, DateTime.Now, null);
-                //var pedido = new PedidoEntity(numeroPedido, DateTime.Now, null, numeroCliente, carrinho.Id.ToString(), null, 0, false);
-                //var pedidoStatus = new PedidoStatus(numeroPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado), DateTime.Now);
+                //var CodigoPedido = _pedidoGateway.GetAll().Result.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;
+                //var carrinho = new Carrinho(CodigoPedido, numeroCliente, 0, DateTime.Now, null);
+                //var pedido = new PedidoEntity(CodigoPedido, DateTime.Now, null, numeroCliente, carrinho.Id.ToString(), null, 0, false);
+                //var pedidoStatus = new PedidoStatus(CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado), DateTime.Now);
 
                 //await _carrinhoGateway.Create(carrinho);
                 //await _pedidoStatusGateway.Create(pedidoStatus);

@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace QuickOrderPedido.Infra.MQ
 {
-    public abstract class RabbitMqPub<T> : IRabbitMqPub<T>  where T : class
+    public class RabbitMqPub<T> : IRabbitMqPub<T> where T : class
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;

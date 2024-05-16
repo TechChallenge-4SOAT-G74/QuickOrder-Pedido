@@ -3,9 +3,9 @@ using QuickOrderPedido.Application.Dtos.Base;
 
 namespace QuickOrderPedido.Application.UseCases.Interfaces
 {
-    public interface IPedidoObterUseCase : IBaseUseCase
+    public interface IPedidoObterUseCase
     {
-        Task<ServiceResult<PedidoDto>> ConsultarPedido(int id);
+        Task<ServiceResult<PedidoDto>> ConsultarPedido(string id);
         Task<ServiceResult<List<PedidoDto>>> ConsultarListaPedidos();
     }
 }
