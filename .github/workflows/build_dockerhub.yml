@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./src
-          #file: src/Adapters/Driving/Api/Dockerfile  #Alterar para path do dockerfile
+          file: src/QuickOrderPedido.Api/Dockerfile  #Alterar para path do dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/quickorder-pedido:latest
           secrets: |
