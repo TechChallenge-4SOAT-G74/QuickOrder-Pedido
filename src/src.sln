@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Api", "QuickOrderPedido.Api\QuickOrderPedido.Api.csproj", "{930B0861-FE1B-4C83-9AA3-4C1FC42474C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Application", "QuickOrder.Application\QuickOrderPedido.Application.csproj", "{DC097C7A-93F9-4380-B2A0-F331394B3611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Application", "QuickOrderPedido.Application\QuickOrderPedido.Application.csproj", "{DC097C7A-93F9-4380-B2A0-F331394B3611}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Domain", "QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj", "{4F7598F0-86F0-4C47-99E9-F10C07601C87}"
 EndProject

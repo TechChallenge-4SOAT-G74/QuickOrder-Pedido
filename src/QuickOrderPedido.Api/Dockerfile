@@ -12,7 +12,9 @@ COPY ["QuickOrderPedido.Api/QuickOrderPedido.Api.csproj", "QuickOrderPedido.Api/
 COPY ["QuickOrderPedido.Application/QuickOrderPedido.Application.csproj", "QuickOrderPedido.Application/"]
 COPY ["QuickOrderPedido.Domain/QuickOrderPedido.Domain.csproj", "QuickOrderPedido.Domain/"]
 COPY ["QuickOrderPedido.Infra.Gateway/QuickOrderPedido.Infra.Gateway.csproj", "QuickOrderPedido.Infra.Gateway/"]
+COPY ["QuickOrderPedido.Infra.MQ/QuickOrderPedido.Infra.MQ.csproj", "QuickOrderPedido.Infra.MQ/"]
 COPY ["QuickOrderPedido.IoC/QuickOrderPedido.IoC.csproj", "QuickOrderPedido.IoC/"]
+COPY ["QuickOrderPedido.Tests/QuickOrderPedido.Tests.csproj", "QuickOrderPedido.Tests/"]
 
 RUN dotnet restore "./QuickOrderPedido.Api/./QuickOrderPedido.Api.csproj"
 COPY . .

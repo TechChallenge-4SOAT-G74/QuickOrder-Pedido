@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuickOrder.Application\QuickOrderPedido.Application.csproj" />
+    <ProjectReference Include="..\QuickOrderPedido.Application\QuickOrderPedido.Application.csproj" />
     <ProjectReference Include="..\QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj" />
     <ProjectReference Include="..\QuickOrderPedido.Infra.Gateway\QuickOrderPedido.Infra.Gateway.csproj" />
     <ProjectReference Include="..\QuickOrderPedido.Infra.MQ\QuickOrderPedido.Infra.MQ.csproj" />
