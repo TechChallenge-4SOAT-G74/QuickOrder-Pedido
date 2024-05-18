@@ -8,25 +8,20 @@ using QuickOrderPedido.Infra.MQ;
 
 namespace QuickOrderPedido.Application.UseCases
 {
-    public class PedidoAtualizarUseCase : IPedidoAtualizarUseCase
+    public class PedidoAtualizarUseCase : PedidoUseCaseBase, IPedidoAtualizarUseCase
     {
         private readonly ICarrinhoGateway _carrinhoGateway;
-        private readonly IPedidoStatusGateway _pedidoStatusGateway;
         private readonly IPedidoGateway _pedidoGateway;
-        private readonly IPedidoExcluirUseCase _pedidoExcluirUseCase;
         private readonly IRabbitMqPub<Pedido> _rabbitMqPub;
 
 
         public PedidoAtualizarUseCase(ICarrinhoGateway carrinhoGateway,
                 IPedidoStatusGateway pedidoStatusGateway,
                 IPedidoGateway pedidoGateway,
-                IPedidoExcluirUseCase pedidoExcluirUseCase,
-                IRabbitMqPub<Pedido> rabbitMqPub)
+                IRabbitMqPub<Pedido> rabbitMqPub) : base(carrinhoGateway, pedidoStatusGateway, pedidoGateway)
         {
             _carrinhoGateway = carrinhoGateway;
-            _pedidoStatusGateway = pedidoStatusGateway;
             _pedidoGateway = pedidoGateway;
-            _pedidoExcluirUseCase = pedidoExcluirUseCase;
             _rabbitMqPub = rabbitMqPub;
         }
 
@@ -88,31 +83,6 @@ namespace QuickOrderPedido.Application.UseCases
             return result;
         }
 
-        public async Task<ServiceResult> AlterarStatusPedido(string codigoPedido, string pedidoStatus)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var pedido = await _pedidoStatusGateway.GetValue("CodigoPedido", codigoPedido);
-
-                if (pedido == null)
-                {
-                    result.AddError("Pedido não localizado.");
-                    return result;
-                }
-
-                pedido.StatusPedido = pedidoStatus;
-                pedido.DataAtualizacao = DateTime.Now;
-                _pedidoStatusGateway.Update(pedido);
-
-            }
-            catch (Exception ex)
-            {
-                result.AddError(ex.Message);
-            }
-            return result;
-        }
-
         public async Task<ServiceResult> ConfirmarPagamentoPedido(string codigoPedido, string pedidoStatus)
         {
             var result = new ServiceResult();
@@ -135,7 +105,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                 await AlterarStatusPedido(codigoPedido, pedidoStatus);
 
-                await _pedidoExcluirUseCase.LimparCarrinho(codigoPedido);
+                await LimparCarrinho(codigoPedido);
 
 
             }

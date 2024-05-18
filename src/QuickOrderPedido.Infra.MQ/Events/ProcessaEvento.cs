@@ -8,12 +8,12 @@ namespace QuickOrderPedido.Infra.MQ
 {
     public class ProcessaEvento : IProcessaEvento
     {
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public ProcessaEvento(IMapper mapper, IServiceScopeFactory scopeFactory)
+        public ProcessaEvento(IServiceScopeFactory scopeFactory)
         {
-            _mapper = mapper;
+            //_mapper = mapper;
             _scopeFactory = scopeFactory;
         }
 

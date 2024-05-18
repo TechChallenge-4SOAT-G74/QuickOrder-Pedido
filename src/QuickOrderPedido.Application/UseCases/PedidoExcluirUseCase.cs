@@ -1,29 +1,22 @@
 ﻿using QuickOrderPedido.Application.Dtos.Base;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Adapters;
-using QuickOrderPedido.Domain.Entities;
-using QuickOrderPedido.Domain.Enums;
 
 
 namespace QuickOrderPedido.Application.UseCases
 {
-    public class PedidoExcluirUseCase : IPedidoExcluirUseCase
+    public class PedidoExcluirUseCase : PedidoUseCaseBase, IPedidoExcluirUseCase
     {
         private readonly ICarrinhoGateway _carrinhoGateway;
-        private readonly IPedidoStatusGateway _pedidoStatusGateway;
         private readonly IPedidoGateway _pedidoGateway;
-        private readonly IPedidoAtualizarUseCase _pedidoAtualizarUseCase;
 
 
-        public PedidoExcluirUseCase(ICarrinhoGateway carrinhoGateway, 
-            IPedidoStatusGateway pedidoStatusGateway, 
-            IPedidoGateway pedidoGateway, 
-            IPedidoAtualizarUseCase pedidoAtualizarUseCase)
+        public PedidoExcluirUseCase(ICarrinhoGateway carrinhoGateway,
+            IPedidoStatusGateway pedidoStatusGateway,
+            IPedidoGateway pedidoGateway) : base(carrinhoGateway, pedidoStatusGateway, pedidoGateway)
         {
             _carrinhoGateway = carrinhoGateway;
-            _pedidoStatusGateway = pedidoStatusGateway;
             _pedidoGateway = pedidoGateway;
-            _pedidoAtualizarUseCase = pedidoAtualizarUseCase;
         }
 
         public async Task<ServiceResult> CancelarPedido(string codigoPedido, string statusPedido)
@@ -46,7 +39,7 @@ namespace QuickOrderPedido.Application.UseCases
                     if (carrinho != null)
                         _carrinhoGateway.Delete(carrinho.Id.ToString());
 
-                    await _pedidoAtualizarUseCase.AlterarStatusPedido(codigoPedido, statusPedido);
+                    await AlterarStatusPedido(codigoPedido, statusPedido);
 
                     await LimparCarrinho(codigoPedido);
                 }
@@ -58,25 +51,5 @@ namespace QuickOrderPedido.Application.UseCases
             return result;
         }
 
-        public async Task<ServiceResult> LimparCarrinho(string codigoPedido)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var carrinho = codigoPedido != null ? await _carrinhoGateway.GetValue("CodigoPedido", codigoPedido) : new Carrinho();
-
-                if (carrinho == null)
-                {
-                    result.AddError("Pedido não encontrado.");
-                    return result;
-                }
-                _carrinhoGateway.Delete(carrinho.Id.ToString());
-            }
-            catch (Exception ex)
-            {
-                result.AddError(ex.Message);
-            }
-            return result;
-        }
     }
 }
