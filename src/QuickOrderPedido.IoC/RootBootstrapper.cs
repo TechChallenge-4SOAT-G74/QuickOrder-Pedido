@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using QuickOrderPedido.Application.Events;
 using QuickOrderPedido.Application.UseCases;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Adapters;
@@ -15,9 +14,6 @@ namespace QuickOrderPedido.IoC
         public static void BootstrapperRegisterServices(this IServiceCollection services)
         {
             var assemblyTypes = typeof(RootBootstrapper).Assembly.GetNoAbstractTypes();
-
-           // services.AddImplementations(ServiceLifetime.Scoped, typeof(IBaseUseCase), assemblyTypes);
-           // services.AddImplementations(ServiceLifetime.Scoped, typeof(IBaseGateway), assemblyTypes);
 
             services.AddScoped(typeof(IRabbitMqPub<>), typeof(RabbitMqPub<>));
             services.AddScoped<IProcessaEvento, ProcessaEvento>();

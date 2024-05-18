@@ -2,6 +2,8 @@
 {
     public class Carrinho : EntityMongoBase
     {
+        public Carrinho() { }
+
         public Carrinho(int numeroCliente, double valor, DateTime dataAtualizacao, List<ProdutoCarrinho>? produtosCarrinho)
         {
             NumeroCliente = numeroCliente;

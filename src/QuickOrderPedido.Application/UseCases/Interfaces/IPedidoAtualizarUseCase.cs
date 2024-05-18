@@ -7,8 +7,11 @@ namespace QuickOrderPedido.Application.UseCases.Interfaces
 {
     public interface IPedidoAtualizarUseCase
     {
-        Task<ServiceResult> AlterarItemAoPedido(string id, List<ProdutoCarrinho> pedidoDto);
-        Task<ServiceResult> AlterarStatusPedido(int id, string pedidoStatus);
-        Task<ServiceResult> ConfirmarPedido(int id);
+        Task<ServiceResult> AdicionarItemCarrinho(int numeroCliente, ProdutoCarrinho produtoCarrinho);
+        Task<ServiceResult> RemoverItemCarrinho(int numeroCliente, ProdutoCarrinho produtoCarrinho);
+        Task<ServiceResult> AlterarStatusPedido(string codigoPedido, string pedidoStatus);
+        Task<ServiceResult> ConfirmarPagamentoPedido(string codigoPedido, string pedidoStatus);
+        Task<ServiceResult> FinalizarCarrinho(int numeroCliente);
+        Task<ServiceResult> ConfirmarPedido(string codigoPedido);
     }
 }

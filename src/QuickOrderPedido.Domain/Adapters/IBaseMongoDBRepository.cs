@@ -7,6 +7,7 @@
         void Delete(string id);
         Task<TEntity> Get(string id);
         Task<TEntity> GetValue(string column, string value);
+        Task<TEntity> GetValue(string column, int value);
         Task<IEnumerable<TEntity>> GetAll();
 
     }

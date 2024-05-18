@@ -1,4 +1,4 @@
-﻿namespace QuickOrderPedido.Application.Events
+﻿namespace QuickOrderPedido.Infra.MQ
 {
     public interface IProcessaEvento
     {

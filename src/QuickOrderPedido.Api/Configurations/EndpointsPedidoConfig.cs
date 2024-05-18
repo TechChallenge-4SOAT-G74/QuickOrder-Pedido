@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickOrderPedido.Application.UseCases.Interfaces;
-using QuickOrderPedido.Domain.Entities;
+using QuickOrderPedido.Domain.Enums;
 
 namespace QuickOrderPedido.Api.Configurations
 {
@@ -18,25 +18,14 @@ namespace QuickOrderPedido.Api.Configurations
                 return Results.Ok(await pedidoObterUseCase.ConsultarListaPedidos());
             });
 
-
-            app.MapPost("/criarpedido/{idcliente}", async ([FromServices] IPedidoCriarUseCase pedidoCriarUseCase, int idcliente) =>
+            app.MapPut("/finalizarcarrinho/{numeroCliente}", async ([FromServices] IPedidoAtualizarUseCase pedidoAtualizarUseCase, int numeroCliente) =>
             {
-                return Results.Ok(await pedidoCriarUseCase.CriarPedido(idcliente));
+                return Results.Ok(await pedidoAtualizarUseCase.FinalizarCarrinho(numeroCliente));
             });
 
-            app.MapPut("/adicionaritemaopedido/{id}", async ([FromServices] IPedidoAtualizarUseCase pedidoAtualizarUseCase, string id, [FromBody] List<ProdutoCarrinho> produtoCarrinho) =>
+            app.MapDelete("/cancelarpedido/{codigoPedido}", async ([FromServices] IPedidoExcluirUseCase pedidoExcluirUseCase, string codigoPedido) =>
             {
-                return Results.Ok(await pedidoAtualizarUseCase.AlterarItemAoPedido(id, produtoCarrinho));
-            });
-
-            app.MapPut("/confirmapedido/{id}", async ([FromServices] IPedidoAtualizarUseCase pedidoAtualizarUseCase, int id) =>
-            {
-                return Results.Ok(await pedidoAtualizarUseCase.ConfirmarPedido(id));
-            });
-
-            app.MapDelete("/cancelarpedido/{id}", async ([FromServices] IPedidoExcluirUseCase pedidoExcluirUseCase, string id) =>
-            {
-                return Results.Ok(await pedidoExcluirUseCase.CancelarPedido(id));
+                return Results.Ok(await pedidoExcluirUseCase.CancelarPedido(codigoPedido, EStatusPedido.CanceladoCliente.ToString()));
             });
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Moq;
-using QuickOrderPedido.Application.Events;
 using QuickOrderPedido.Infra.MQ;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;

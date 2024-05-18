@@ -26,7 +26,13 @@ namespace QuickOrderPedido.Domain.Enums
         AguardandoRetirada = 7,
 
         [Description("Finalizado")]
-        Finalizado = 8
+        Finalizado = 8,
+
+        [Description("Cancelado Cliente")]
+        CanceladoCliente = 9,
+
+        [Description("Pagamento não aprovado")]
+        PagamentonaoAprovado = 10
     }
 
     public static class EStatusPedidoExtensions

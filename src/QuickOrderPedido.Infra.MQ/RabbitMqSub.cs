@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using QuickOrderPedido.Application.Events;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;

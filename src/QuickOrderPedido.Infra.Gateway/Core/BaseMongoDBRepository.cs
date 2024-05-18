@@ -42,6 +42,12 @@ namespace QuickOrderPedido.Infra.Gateway.Core
             return await _dbCollection.FindAsync(filter).Result.FirstOrDefaultAsync();
         }
 
+        public async Task<TEntity> GetValue(string column, int value)
+        {
+            FilterDefinition<TEntity> filter = Builders<TEntity>.Filter.Eq(column, value);
+            return await _dbCollection.FindAsync(filter).Result.FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<TEntity>> GetAll()
         {
             var all = await _dbCollection.FindAsync(Builders<TEntity>.Filter.Empty);

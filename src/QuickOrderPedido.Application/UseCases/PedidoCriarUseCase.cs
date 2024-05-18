@@ -1,42 +1,77 @@
-﻿
-
-using QuickOrderPedido.Application.Dtos.Base;
+﻿using QuickOrderPedido.Application.Dtos.Base;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Adapters;
+using QuickOrderPedido.Domain.Entities;
+using QuickOrderPedido.Domain.Enums;
 
 namespace QuickOrderPedido.Application.UseCases
 {
     public class PedidoCriarUseCase : IPedidoCriarUseCase
     {
         private readonly ICarrinhoGateway _carrinhoGateway;
+        private readonly IPedidoStatusGateway _pedidoStatusGateway;
+        private readonly IPedidoGateway _pedidoGateway;
 
-        public PedidoCriarUseCase(ICarrinhoGateway carrinhoGateway)
+        public PedidoCriarUseCase(ICarrinhoGateway carrinhoGateway, IPedidoStatusGateway pedidoStatusGateway, IPedidoGateway pedidoGateway)
         {
             _carrinhoGateway = carrinhoGateway;
+            _pedidoStatusGateway = pedidoStatusGateway;
+            _pedidoGateway = pedidoGateway;
         }
 
-        public async Task<ServiceResult> CriarPedido(int? numeroCliente = null)
+        public async Task<ServiceResult> CriarPedido(int numeroCliente, ProdutoCarrinho? produtoCarrinho = null)
         {
-            //TODO: Usaundo número do cliente como parametro até cria a autenticação.
-
             var result = new ServiceResult();
             try
             {
+                var carrinho = numeroCliente > 0  ? await _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
 
-                //var CodigoPedido = _pedidoGateway.GetAll().Result.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;
-                //var carrinho = new Carrinho(CodigoPedido, numeroCliente, 0, DateTime.Now, null);
-                //var pedido = new PedidoEntity(CodigoPedido, DateTime.Now, null, numeroCliente, carrinho.Id.ToString(), null, 0, false);
-                //var pedidoStatus = new PedidoStatus(CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado), DateTime.Now);
+                if (carrinho == null)
+                {
+                    var dataCriacaoPedido = DateTime.Now;
+                    await SaveCarrinho(numeroCliente, produtoCarrinho);
+                    await SavePedido(numeroCliente, null, dataCriacaoPedido);
+                    await SavePedidoStatus(numeroCliente, dataCriacaoPedido);
+                }
 
-                //await _carrinhoGateway.Create(carrinho);
-                //await _pedidoStatusGateway.Create(pedidoStatus);
-                //await _pedidoGateway.Insert(pedido);
             }
             catch (Exception ex)
             {
                 result.AddError(ex.Message);
             }
             return result;
+        }
+
+        private async Task SaveCarrinho(int numeroCliente, ProdutoCarrinho? produtoCarrinho)
+        {
+            var sacola = new Carrinho(numeroCliente, 0, DateTime.Now, produtoCarrinho == null ? null : new List<ProdutoCarrinho>() { produtoCarrinho });
+            await _carrinhoGateway.Create(sacola);
+        }
+
+        private async Task SavePedidoStatus(int numeroCliente, DateTime dataCriacaoPedido)
+        {
+            var pedidoResult = await _pedidoGateway.GetAll();
+            var codigoPedido = pedidoResult.FirstOrDefault(x => x.ClienteId == numeroCliente && x.PedidoPago.Equals(false) && x.DataHoraInicio.Equals(dataCriacaoPedido)).Id.ToString();
+
+            var pedidoStatus = new PedidoStatus(codigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado), dataCriacaoPedido);
+            if (pedidoStatus != null) await _pedidoStatusGateway.Create(pedidoStatus);
+        }
+
+        private async Task SavePedido(int numeroCliente, ProdutoCarrinho? produtoCarrinho, DateTime dataCriacaoPedido)
+        {
+            var sacolaId = _carrinhoGateway.GetValue("NumeroCliente", numeroCliente).Id.ToString();
+
+            var pedido = new Pedido(
+                dataCriacaoPedido,
+                null,
+                numeroCliente,
+                sacolaId,
+                produtoCarrinho == null ? 0 : produtoCarrinho.ValorProduto * produtoCarrinho.Quantidade,
+                false,
+                produtoCarrinho == null ? null : new List<ProdutoCarrinho>() { produtoCarrinho },
+                null);
+
+            await _pedidoGateway.Create(pedido);
         }
     }
 }
