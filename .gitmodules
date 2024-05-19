@@ -1,0 +1,3 @@
+[submodule "infra"]
+	path = infra
+	url = https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Infra-MicroServices-Kubernetes.git
