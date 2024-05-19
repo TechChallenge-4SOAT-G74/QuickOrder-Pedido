@@ -1,5 +1,8 @@
-﻿namespace QuickOrderPedido.Infra.Gateway.Core
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace QuickOrderPedido.Infra.Gateway.Core
 {
+    [ExcludeFromCodeCoverage]
     public class DatabaseMongoDBSettings
     {
         public string ConnectionString { get; set; } = null!;

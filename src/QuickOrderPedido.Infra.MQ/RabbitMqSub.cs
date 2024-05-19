@@ -2,24 +2,37 @@
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace QuickOrderPedido.Infra.MQ
 {
+    [ExcludeFromCodeCoverage]
     public class RabbitMqSub : BackgroundService
     {
         private readonly string _nomeDaFila;
-        private readonly IConnection _connection;
         private IModel _channel;
         private IProcessaEvento _processaEvento;
 
         public RabbitMqSub(IOptions<RabbitMqSettings> configuration, IProcessaEvento processaEvento)
         {
-            _connection = new ConnectionFactory() { HostName = configuration.Value.Host, Port = Int32.Parse(configuration.Value.Port) }.CreateConnection();
-            _channel = _connection.CreateModel();
-            _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
+            var factory = new ConnectionFactory
+            {
+                // "guest"/"guest" by default, limited to localhost connections
+                UserName = configuration.Value.UserName,
+                Password = configuration.Value.Password,
+                VirtualHost = "/",
+                HostName = configuration.Value.Host,
+                Port = Int32.Parse(configuration.Value.Port)
+            };
+
+            IConnection connection = factory.CreateConnection();
+
+            _channel = connection.CreateModel();
+            _channel.ExchangeDeclare(exchange: "Pedido", type: ExchangeType.Fanout);
+
             _nomeDaFila = _channel.QueueDeclare().QueueName;
-            _channel.QueueBind(queue: _nomeDaFila, exchange: "trigger", routingKey: "");
+            _channel.QueueBind(queue: _nomeDaFila, exchange: "Pedido", routingKey: "");
             _processaEvento = processaEvento;
         }
 

@@ -24,7 +24,7 @@ namespace QuickOrderPedido.Application.UseCases
             var result = new ServiceResult();
             try
             {
-                var carrinho = numeroCliente > 0  ? await _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
+                var carrinho = numeroCliente > 0 ? await _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
                 var dataCriacaoPedido = DateTime.Now;
 
                 if (carrinho == null)

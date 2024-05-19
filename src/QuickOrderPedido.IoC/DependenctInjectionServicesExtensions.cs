@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace QuickOrderPedido.IoC
 {
+    [ExcludeFromCodeCoverage]
     public static class DependenctInjectionServicesExtensions
     {
         public static void AddImplementations(this IServiceCollection services,
@@ -42,6 +44,7 @@ namespace QuickOrderPedido.IoC
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public static class AssemblyExtentions
     {
         public static IEnumerable<Type> GetNoAbstractTypes(this Assembly assemblyFile)

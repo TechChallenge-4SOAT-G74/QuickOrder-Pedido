@@ -24,7 +24,7 @@ namespace QuickOrderPedido.Application.UseCases
             var result = new ServiceResult();
             try
             {
-                var pedido = await _pedidoGateway.GetValue("CodigoPedido", codigoPedido);
+                var pedido = await _pedidoGateway.Get(codigoPedido);
 
                 if (pedido == null)
                 {

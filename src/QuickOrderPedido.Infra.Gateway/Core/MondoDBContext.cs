@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuickOrderPedido.Infra.Gateway.Core
 {
+    [ExcludeFromCodeCoverage]
     public class MondoDBContext : IMondoDBContext
     {
         private IMongoDatabase _db { get; set; }

@@ -31,8 +31,14 @@ namespace QuickOrderPedido.Domain.Enums
         [Description("Cancelado Cliente")]
         CanceladoCliente = 9,
 
+        [Description("Cancelado Atendimento")]
+        CanceladoAtendimento = 10,
+
         [Description("Pagamento não aprovado")]
-        PagamentonaoAprovado = 10
+        PagamentonaoAprovado = 11,
+
+        [Description("Pendente cancelamento")]
+        PendenteCancelamento = 12
     }
 
     public static class EStatusPedidoExtensions

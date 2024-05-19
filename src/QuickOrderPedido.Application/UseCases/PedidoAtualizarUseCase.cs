@@ -64,7 +64,8 @@ namespace QuickOrderPedido.Application.UseCases
                 }
 
                 carrinho.DataAtualizacao = DateTime.Now;
-                carrinho.Valor = carrinho.Valor + (produtoCarrinho.ValorProduto * produtoCarrinho.Quantidade);
+                carrinho.Valor = carrinho.Valor - (produtoCarrinho.ValorProduto * produtoCarrinho.Quantidade);
+                carrinho.Valor = carrinho.Valor < 0 ? 0 : carrinho.Valor;
                 try
                 {
                     carrinho.ProdutosCarrinho.Remove(produtoCarrinho);

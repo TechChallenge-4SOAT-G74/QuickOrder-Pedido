@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using QuickOrderPedido.Infra.Gateway.Core;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace QuickOrderPedido.IoC
 {
+    [ExcludeFromCodeCoverage]
     public static class HealthCheckSetupExtentions
     {
         public static void ConfigureHealthCheckEndpoints(this IApplicationBuilder app)

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
 using System.Text.Json;

@@ -6,9 +6,11 @@ using QuickOrderPedido.Infra.Gateway;
 using QuickOrderPedido.Infra.Gateway.Core;
 using QuickOrderPedido.Infra.Gateway.Gateway;
 using QuickOrderPedido.Infra.MQ;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuickOrderPedido.IoC
 {
+    [ExcludeFromCodeCoverage]
     public static class RootBootstrapper
     {
         public static void BootstrapperRegisterServices(this IServiceCollection services)
