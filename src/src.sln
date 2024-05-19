@@ -18,6 +18,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickOrderPedido.Tests", "QuickOrderPedido.Tests\QuickOrderPedido.Tests.csproj", "{F25BD721-34C5-44EE-9F25-B8AC1E942108}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Soluction_Itens", "Soluction_Itens", "{4CEC0D68-549C-48D0-8FA0-C81823F74891}"
+	ProjectSection(SolutionItems) = preProject
+		..\infra\02-deployments\25-mongo-pedido-deploy.yml = ..\infra\02-deployments\25-mongo-pedido-deploy.yml
+		..\infra\02-deployments\29-quickorder-pedido-deployment.yml = ..\infra\02-deployments\29-quickorder-pedido-deployment.yml
+		..\infra\03-services\34-mongo-pedido-service.yml = ..\infra\03-services\34-mongo-pedido-service.yml
+		..\infra\03-services\37-quickorder-pedido-service.yml = ..\infra\03-services\37-quickorder-pedido-service.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
