@@ -130,7 +130,7 @@ namespace QuickOrderPedido.Application.UseCases
                     return result;
                 }
 
-                var pedido = await _pedidoGateway.GetValue("SacolaId", carrinho.Id.ToString());
+                var pedido = await _pedidoGateway.GetValue("CarrinhoId", carrinho.Id.ToString());
 
                 if (pedido == null)
                 {
@@ -160,7 +160,7 @@ namespace QuickOrderPedido.Application.UseCases
             var result = new ServiceResult();
             try
             {
-                var pedido = await _pedidoGateway.GetValue("Id", codigoPedido);
+                var pedido = await _pedidoGateway.Get(codigoPedido);
 
                 if (pedido == null)
                 {
@@ -168,7 +168,7 @@ namespace QuickOrderPedido.Application.UseCases
                     return result;
                 }
 
-                _rabbitMqPub.Publicar(pedido);
+                _rabbitMqPub.Publicar(pedido, "Atendimento", "Pedido_Confirmado");
             }
             catch (Exception ex)
             {

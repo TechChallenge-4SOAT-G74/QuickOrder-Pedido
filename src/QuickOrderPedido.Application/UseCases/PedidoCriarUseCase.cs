@@ -25,14 +25,14 @@ namespace QuickOrderPedido.Application.UseCases
             try
             {
                 var carrinho = numeroCliente > 0  ? await _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
+                var dataCriacaoPedido = DateTime.Now;
 
                 if (carrinho == null)
                 {
-                    var dataCriacaoPedido = DateTime.Now;
                     await SaveCarrinho(numeroCliente, produtoCarrinho);
                     await SavePedido(numeroCliente, null, dataCriacaoPedido);
-                    await SavePedidoStatus(numeroCliente, dataCriacaoPedido);
                 }
+                await SavePedidoStatus(numeroCliente, dataCriacaoPedido);
 
             }
             catch (Exception ex)
@@ -51,21 +51,25 @@ namespace QuickOrderPedido.Application.UseCases
         private async Task SavePedidoStatus(int numeroCliente, DateTime dataCriacaoPedido)
         {
             var pedidoResult = await _pedidoGateway.GetAll();
-            var codigoPedido = pedidoResult.FirstOrDefault(x => x.ClienteId == numeroCliente && x.PedidoPago.Equals(false) && x.DataHoraInicio.Equals(dataCriacaoPedido)).Id.ToString();
+            var codigoPedido = pedidoResult.FirstOrDefault(x => x.ClienteId == numeroCliente && x.PedidoPago.Equals(false)).Id.ToString();
 
-            var pedidoStatus = new PedidoStatus(codigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado), dataCriacaoPedido);
-            if (pedidoStatus != null) await _pedidoStatusGateway.Create(pedidoStatus);
+            var pedidoStatus = _pedidoStatusGateway.GetValue("CodigoPedido", codigoPedido).Result;
+            if (pedidoStatus == null)
+            {
+                await _pedidoStatusGateway.Create(new PedidoStatus(codigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Criado), dataCriacaoPedido));
+            }
+            else _pedidoStatusGateway.Update(pedidoStatus);
         }
 
         private async Task SavePedido(int numeroCliente, ProdutoCarrinho? produtoCarrinho, DateTime dataCriacaoPedido)
         {
-            var sacolaId = _carrinhoGateway.GetValue("NumeroCliente", numeroCliente).Id.ToString();
+            var carrinhoId = _carrinhoGateway.GetValue("NumeroCliente", numeroCliente).Id.ToString();
 
             var pedido = new Pedido(
                 dataCriacaoPedido,
                 null,
                 numeroCliente,
-                sacolaId,
+                carrinhoId,
                 produtoCarrinho == null ? 0 : produtoCarrinho.ValorProduto * produtoCarrinho.Quantidade,
                 false,
                 produtoCarrinho == null ? null : new List<ProdutoCarrinho>() { produtoCarrinho },

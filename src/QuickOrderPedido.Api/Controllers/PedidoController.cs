@@ -2,11 +2,11 @@
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Enums;
 
-namespace QuickOrderPedido.Api.Configurations
+namespace QuickOrderPedido.Api.Controllers
 {
-    public static class EndpointsPedidoConfig
+    public static class PedidoController
     {
-        public static void RegisterPedidoEndpoints(this WebApplication app)
+        public static void RegisterPedidoController(this WebApplication app)
         {
             app.MapGet("/consultarpedido/{id}", async ([FromServices] IPedidoObterUseCase pedidoObterUseCase, string id) =>
             {
@@ -23,9 +23,19 @@ namespace QuickOrderPedido.Api.Configurations
                 return Results.Ok(await pedidoAtualizarUseCase.FinalizarCarrinho(numeroCliente));
             });
 
+            app.MapPut("/confirmarpedido/{codigoPedido}", async ([FromServices] IPedidoAtualizarUseCase pedidoAtualizarUseCase, string codigoPedido) =>
+            {
+                return Results.Ok(await pedidoAtualizarUseCase.ConfirmarPedido(codigoPedido));
+            });
+
             app.MapDelete("/cancelarpedido/{codigoPedido}", async ([FromServices] IPedidoExcluirUseCase pedidoExcluirUseCase, string codigoPedido) =>
             {
                 return Results.Ok(await pedidoExcluirUseCase.CancelarPedido(codigoPedido, EStatusPedido.CanceladoCliente.ToString()));
+            });
+
+            app.MapPost("/criarpedido/{idcliente}", async ([FromServices] IPedidoCriarUseCase pedidoCriarUseCase, int idcliente) =>
+            {
+                return Results.Ok(await pedidoCriarUseCase.CriarPedido(idcliente));
             });
         }
     }

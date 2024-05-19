@@ -15,7 +15,7 @@ namespace QuickOrderPedido.IoC
         {
             var assemblyTypes = typeof(RootBootstrapper).Assembly.GetNoAbstractTypes();
 
-            services.AddScoped(typeof(IRabbitMqPub<>), typeof(RabbitMqPub<>));
+            services.AddSingleton(typeof(IRabbitMqPub<>), typeof(RabbitMqPub<>));
             services.AddScoped<IProcessaEvento, ProcessaEvento>();
 
             //Repositories MongoDB

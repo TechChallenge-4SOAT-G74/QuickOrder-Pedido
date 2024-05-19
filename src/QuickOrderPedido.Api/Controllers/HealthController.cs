@@ -4,33 +4,25 @@ using System.Net;
 
 namespace QuickOrderPedido.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HealthController : ControllerBase
+    public static class HealthController
     {
-        private readonly HealthCheckService healthCheckService;
-
-        public HealthController(HealthCheckService healthCheckService)
+        public static void RegisterHealthController(this WebApplication app)
         {
-            this.healthCheckService = healthCheckService;
-        }
-
-        [HttpGet]
-        [ApiExplorerSettings(IgnoreApi = false)]
-        public async Task<ActionResult> Get()
-        {
-            HealthReport report = await this.healthCheckService.CheckHealthAsync();
-            var result = new
+            app.MapGet("health", async ([FromServices] HealthCheckService healthCheckService) =>
             {
-                status = report.Status.ToString(),
-                errros = report.Entries.Select(e => new
+                HealthReport report = await healthCheckService.CheckHealthAsync();
+                var result = new
                 {
-                    name = e.Key,
-                    status = e.Value.Status.ToString(),
-                    description = e.Value.Status != HealthStatus.Healthy ? e.Value.Exception.ToString() : e.Value.Description != null ? e.Value.Description : "Healthcheck Ok!"
-                }).ToList()
-            };
-            return report.Status == HealthStatus.Healthy ? this.Ok(result) : this.StatusCode((int)HttpStatusCode.ServiceUnavailable, result);
+                    status = report.Status.ToString(),
+                    errros = report.Entries.Select(e => new
+                    {
+                        name = e.Key,
+                        status = e.Value.Status.ToString(),
+                        description = e.Value.Status != HealthStatus.Healthy ? e.Value.Exception.ToString() : e.Value.Description != null ? e.Value.Description : "Healthcheck Ok!"
+                    }).ToList()
+                };
+                return report.Status == HealthStatus.Healthy ? Results.Ok(result) : Results.Problem(statusCode: (int)HttpStatusCode.ServiceUnavailable);
+            });
         }
     }
 }

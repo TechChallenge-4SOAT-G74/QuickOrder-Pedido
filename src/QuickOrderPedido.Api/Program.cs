@@ -1,7 +1,10 @@
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using QuickOrderPedido.Api.Configurations;
+using QuickOrderPedido.Api.Controllers;
 using QuickOrderPedido.Infra.Gateway.Core;
+using QuickOrderPedido.Infra.MQ;
+using QuickOrderPedido.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,9 @@ builder.Services.Configure<DatabaseMongoDBSettings>(
     builder.Configuration.GetSection("DatabaseMongoDBSettings")
 );
 
+builder.Services.Configure<RabbitMqSettings>(
+    builder.Configuration.GetSection("RabbitMqSettings")
+);
 
 builder.Services.AddSingleton<IMongoDatabase>(options =>
 {
@@ -61,9 +67,9 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuickOrderPedido.Api", Version = "v1" });
 });
 
+builder.Services.ConfigureHealthChecks(builder.Configuration.GetSection("DatabaseMongoDBSettings").Get<DatabaseMongoDBSettings>());
+
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 //if (!app.Environment.IsDevelopment())
@@ -78,7 +84,10 @@ app.UseReDoc(c =>
     c.SpecUrl = "/swagger/v1/swagger.json";
 });
 
-app.RegisterPedidoEndpoints();
+app.RegisterPedidoController();
+app.RegisterHealthController();
+
+app.ConfigureHealthCheckEndpoints();
 
 app.UseCors(myAllowSpecificOrigins);
 
