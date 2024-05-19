@@ -65,6 +65,13 @@ namespace QuickOrderPedido.Application.UseCases
             {
                 var pedido = _pedidoGateway.GetAll().Result;
 
+
+                if (pedido == null || pedido.Count() == 0)
+                {
+                    result.AddError("Pedidos não localizado");
+                    return result;
+                }
+
                 var fila = await _pedidoStatusGateway.GetAll();
 
                 fila = fila.Where(x => !x.StatusPedido.Equals(EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Pago))
@@ -75,7 +82,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                 var listaPedidos = new List<PedidoDto>();
 
-                if (pedido == null || fila == null)
+                if (fila == null || fila.Count() == 0)
                 {
                     result.AddError("Pedidos não localizado");
                     return result;
@@ -83,7 +90,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                 foreach (var item in fila)
                 {
-                    var pedidoFila = pedido?.Where(x => x.Id.Equals(item.CodigoPedido)).FirstOrDefault();
+                    var pedidoFila = pedido?.Where(x => x.Id.ToString().Equals(item.CodigoPedido)).FirstOrDefault();
 
                     if (pedidoFila == null)
                         result.Data = new List<PedidoDto>();

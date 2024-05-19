@@ -27,7 +27,7 @@ namespace QuickOrderPedido.Tests
                 new List<ProdutoItensCarrinho> { new ProdutoItensCarrinho { NomeProdutoItem = "Pão", Quantidade = 1, ValorItem = 10.0 } });
             var pedido = new Pedido(DateTime.Now, null, 1, "123", 10.0, true, new List<ProdutoCarrinho> { produtoCarrinho }, null);
 
-            var fila = new PedidoStatus(pedido.Id.ToString(), "Em preparação", DateTime.Now);
+            var fila = new PedidoStatus(pedido.Id.ToString(), "EmPreparacao", DateTime.Now);
 
             _pedidoGatewayMock.Setup(g => g.Get(pedido.Id.ToString())).ReturnsAsync(pedido);
 
@@ -60,7 +60,7 @@ namespace QuickOrderPedido.Tests
                 new List<ProdutoItensCarrinho> { new ProdutoItensCarrinho { NomeProdutoItem = "Pão", Quantidade = 1, ValorItem = 10.0 } });
             var pedido = new Pedido(DateTime.Now, null, 1, "123", 10.0, true, new List<ProdutoCarrinho> { produtoCarrinho }, null);
 
-            var fila = new PedidoStatus(pedido.Id.ToString(), "Em preparação", DateTime.Now);
+            var fila = new PedidoStatus(pedido.Id.ToString(), "EmPreparacao", DateTime.Now);
 
             _pedidoGatewayMock.Setup(g => g.Get(pedido.Id.ToString())).ReturnsAsync(pedido);
 
@@ -71,6 +71,50 @@ namespace QuickOrderPedido.Tests
             // Assert
             Assert.Null(result.Data);
             Assert.Contains("Pedido não localizado", result.Errors[0].Message);
+        }
+
+        [Fact]
+        public async Task ConsultarFilaPedidos_WhenPedidoAndFilaExist_ReturnsPedidoDto()
+        {
+            // Arrange
+            var produto = new ProdutoCarrinho("Lanche", "Produto 1", 1, 2, 10.0,
+                new List<ProdutoItensCarrinho> { new ProdutoItensCarrinho { NomeProdutoItem = "Pão", Quantidade = 1, ValorItem = 10.0 } });
+            var pedido = new List<Pedido> { new Pedido(DateTime.Now, null, 1, "123", 10.0, true, new List<ProdutoCarrinho> { produto }, null) };
+
+            var fila = new List<PedidoStatus> { new PedidoStatus(pedido[0].Id.ToString(), "EmPreparacao", DateTime.Now) };
+
+            _pedidoGatewayMock.Setup(g => g.GetAll()).ReturnsAsync(pedido);
+
+            _pedidoStatusGatewayMock.Setup(g => g.GetAll()).ReturnsAsync(fila);
+
+            // Act
+            var result = await _pedidoObterUseCase.ConsultarListaPedidos();
+
+            // Assert
+            Assert.NotNull(result.Data);
+            Assert.True(result.IsSuccess);
+
+            _pedidoGatewayMock.Verify(g => g.GetAll(), Times.Once);
+            _pedidoStatusGatewayMock.Verify(g => g.GetAll(), Times.Once);
+        }
+
+        [Fact]
+        public async Task ConsultarFilaPedidos_WhenPedidoOrFilaDoesNotExist_ReturnsError()
+        {
+            // Arrange
+            var pedido = new List<Pedido>();
+            var fila = new List<PedidoStatus>();
+
+            _pedidoGatewayMock.Setup(g => g.GetAll()).ReturnsAsync(pedido);
+
+            _pedidoStatusGatewayMock.Setup(g => g.GetAll()).ReturnsAsync(fila);
+
+            // Act
+            var result = await _pedidoObterUseCase.ConsultarListaPedidos();
+
+            // Assert
+            Assert.Null(result.Data);
+            Assert.Contains("Pedidos não localizado", result.Errors[0].Message);
         }
     }
 }
