@@ -1,7 +1,7 @@
 name: SonarCloud
 on:
   push:
-    branches: [ "develop", "Pedido-01" ]
+    branches: [ "main", "develop", "Pedido-01" ]
   pull_request:
     branches: [ "main" ]
 jobs:
@@ -28,7 +28,7 @@ jobs:
           dotnet-version: 6.0.301
           
       - name: Install Report Generator
-        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+        run: dotnet tool install --global dotnet-coverage
 
       - name: Build and analyze
         env:
@@ -36,9 +36,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         #shell: powershell
         run: |
-          dotnet-sonarscanner begin /k:"TechChallenge-4SOAT-G74_QuickOrder-Pedido" /o:"techchallenge-4soat-g74" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet sonarscanner begin /k:"TechChallenge-4SOAT-G74_QuickOrder-Pedido" /o:"techchallenge-4soat-g74" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.host.url="https://sonarcloud.io"
           dotnet restore ./src/src.sln
           dotnet build ./src/src.sln --configuration Release
-          dotnet test ./src/QuickOrderPedido.Tests/QuickOrderPedido.Tests.csproj --collect:"XPlat Code Coverage" --logger trx --results-directory $GITHUB_WORKSPACE/test/testresults
-          reportgenerator -reports:$GITHUB_WORKSPACE/test/testresults/**/coverage.cobertura.xml -targetdir:$GITHUB_WORKSPACE/test/coverlet/reports -reporttypes:"SonarQube"
-          dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet-coverage collect "dotnet test ./src/QuickOrderPedido.Tests/QuickOrderPedido.Tests.csproj" -f xml -o "coverage.xml"
+          dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
