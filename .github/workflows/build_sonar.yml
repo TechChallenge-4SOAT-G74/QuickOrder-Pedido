@@ -40,4 +40,4 @@ jobs:
           dotnet restore ./src/src.sln
           dotnet build ./src/src.sln --no-incremental
           dotnet-coverage collect "dotnet test ./src/QuickOrderPedido.Tests/QuickOrderPedido.Tests.csproj" -f xml -o "coverage.xml"
-          dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
