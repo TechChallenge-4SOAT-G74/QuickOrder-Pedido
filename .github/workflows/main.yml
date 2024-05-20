@@ -1,8 +1,7 @@
 name: My Test Single Project
 on:
   push:
-    branches:
-      - main
+    branches: [ "main", "develop", "Pedido-01" ]
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
