@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace QuickOrderPedido.Infra.MQ
 {
+    [ExcludeFromCodeCoverage]
     public class ProcessaEvento : IProcessaEvento
     {
         //private readonly IMapper _mapper;

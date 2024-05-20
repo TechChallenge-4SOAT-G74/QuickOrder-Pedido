@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuickOrderPedido.Application.Dtos.Base
 {
+    [ExcludeFromCodeCoverage]
     public class ErrorResultDetail
     {
         public string Code { get; }

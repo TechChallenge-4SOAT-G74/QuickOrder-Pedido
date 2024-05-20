@@ -217,5 +217,46 @@ namespace QuickOrderPedido.Tests
             //_pedidoGatewayMock.Verify(x => x.AlterarStatusPedido(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
+
+        [Fact]
+        public async Task ConfirmarPedido_WhenPedidoExists_ShouldUpdatePedidoAndReturnSuccessResult()
+        {
+            // Arrange
+            var codigoPedido = "123";
+            var pedidoStatus = "PagamentoAprovado";
+            var produtoCarrinho = new ProdutoCarrinho("Lanche", "Produto 1", 1, 2, 10.0,
+                new List<ProdutoItensCarrinho> { new ProdutoItensCarrinho { NomeProdutoItem = "Pão", Quantidade = 1, ValorItem = 10.0 } });
+            var pedido = new Pedido(DateTime.Now, null, 1, "123", 10.0, true, new List<ProdutoCarrinho> { produtoCarrinho }, null);
+
+            _pedidoGatewayMock.Setup(g => g.Get(pedido.Id.ToString())).ReturnsAsync(pedido);
+
+            // Act
+            var result = await _pedidoAtualizarUseCase.ConfirmarPedido(pedido.Id.ToString());
+
+            // Assert
+            Assert.True(result.IsSuccess);
+            Assert.True(pedido.PedidoPago);
+        }
+
+        [Fact]
+        public async Task ConfirmarPedido_WhenPedidoDoesNotExist_ShouldReturnErrorResult()
+        {
+            // Arrange
+            var codigoPedido = "123";
+            var pedidoStatus = "PagamentoAprovado";
+            var produtoCarrinho = new ProdutoCarrinho("Lanche", "Produto 1", 1, 2, 10.0,
+                new List<ProdutoItensCarrinho> { new ProdutoItensCarrinho { NomeProdutoItem = "Pão", Quantidade = 1, ValorItem = 10.0 } });
+            var pedido = new Pedido(DateTime.Now, null, 1, "321", 10.0, false, new List<ProdutoCarrinho> { produtoCarrinho }, null);
+
+            _pedidoGatewayMock.Setup(g => g.Get(pedido.Id.ToString())).ReturnsAsync(pedido);
+
+            // Act
+            var result = await _pedidoAtualizarUseCase.ConfirmarPedido(codigoPedido);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Pedido não localizado.", result.Errors[0].Message);
+        }
+
     }
 }
