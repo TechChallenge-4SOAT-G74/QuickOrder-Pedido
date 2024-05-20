@@ -18,7 +18,7 @@ namespace QuickOrderPedido.Application.UseCases
         public PedidoAtualizarUseCase(ICarrinhoGateway carrinhoGateway,
                 IPedidoStatusGateway pedidoStatusGateway,
                 IPedidoGateway pedidoGateway,
-                IRabbitMqPub<Pedido> rabbitMqPub) : base(carrinhoGateway, pedidoStatusGateway, pedidoGateway)
+                IRabbitMqPub<Pedido> rabbitMqPub) : base(carrinhoGateway, pedidoStatusGateway)
         {
             _carrinhoGateway = carrinhoGateway;
             _pedidoGateway = pedidoGateway;
@@ -106,7 +106,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                 await AlterarStatusPedido(codigoPedido, pedidoStatus);
 
-                await LimparCarrinho(codigoPedido);
+                await LimparCarrinho(pedido.ClienteId);
 
 
             }

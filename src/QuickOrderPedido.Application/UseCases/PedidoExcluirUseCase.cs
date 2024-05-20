@@ -13,7 +13,7 @@ namespace QuickOrderPedido.Application.UseCases
 
         public PedidoExcluirUseCase(ICarrinhoGateway carrinhoGateway,
             IPedidoStatusGateway pedidoStatusGateway,
-            IPedidoGateway pedidoGateway) : base(carrinhoGateway, pedidoStatusGateway, pedidoGateway)
+            IPedidoGateway pedidoGateway) : base(carrinhoGateway, pedidoStatusGateway)
         {
             _carrinhoGateway = carrinhoGateway;
             _pedidoGateway = pedidoGateway;
@@ -41,7 +41,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                     await AlterarStatusPedido(codigoPedido, statusPedido);
 
-                    await LimparCarrinho(codigoPedido);
+                    await LimparCarrinho(pedido.ClienteId);
                 }
             }
             catch (Exception ex)
