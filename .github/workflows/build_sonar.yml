@@ -36,7 +36,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         #shell: powershell
         run: |
-          dotnet-sonarscanner begin /k:"TechChallenge-4SOAT-G74_QuickOrder-Pedido" /o:"techchallenge-4soat-g74" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.host.url="https://sonarcloud.io"
+          dotnet sonarscanner begin /k:"TechChallenge-4SOAT-G74_QuickOrder-Pedido" /o:"techchallenge-4soat-g74" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.host.url="https://sonarcloud.io"
           dotnet restore ./src/src.sln
           dotnet build ./src/src.sln --no-incremental
           dotnet-coverage collect "dotnet test ./src/QuickOrderPedido.Tests/QuickOrderPedido.Tests.csproj" -f xml -o "coverage.xml"
