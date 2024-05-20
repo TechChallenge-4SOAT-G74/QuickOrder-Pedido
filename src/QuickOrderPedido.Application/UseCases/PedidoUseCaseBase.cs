@@ -8,16 +8,12 @@ namespace QuickOrderPedido.Application.UseCases
     {
         private readonly ICarrinhoGateway _carrinhoGateway;
         private readonly IPedidoStatusGateway _pedidoStatusGateway;
-        private readonly IPedidoGateway _pedidoGateway;
-
 
         public PedidoUseCaseBase(ICarrinhoGateway carrinhoGateway,
-                IPedidoStatusGateway pedidoStatusGateway,
-                IPedidoGateway pedidoGateway)
+                IPedidoStatusGateway pedidoStatusGateway)
         {
             _carrinhoGateway = carrinhoGateway;
             _pedidoStatusGateway = pedidoStatusGateway;
-            _pedidoGateway = pedidoGateway;
         }
 
         public async Task<ServiceResult> AlterarStatusPedido(string codigoPedido, string pedidoStatus)
@@ -45,12 +41,12 @@ namespace QuickOrderPedido.Application.UseCases
             return result;
         }
 
-        public async Task<ServiceResult> LimparCarrinho(string codigoPedido)
+        public async Task<ServiceResult> LimparCarrinho(int numeroCliente)
         {
             var result = new ServiceResult();
             try
             {
-                var carrinho = codigoPedido != null ? await _carrinhoGateway.GetValue("CodigoPedido", codigoPedido) : new Carrinho();
+                var carrinho = numeroCliente != null ? await _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
 
                 if (carrinho == null)
                 {

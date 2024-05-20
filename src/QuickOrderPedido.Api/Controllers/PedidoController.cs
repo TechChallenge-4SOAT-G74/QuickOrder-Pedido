@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuickOrderPedido.Api.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public static class PedidoController
     {
         public static void RegisterPedidoController(this WebApplication app)

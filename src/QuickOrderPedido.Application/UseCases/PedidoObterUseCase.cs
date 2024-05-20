@@ -90,7 +90,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                 foreach (var item in fila)
                 {
-                    var pedidoFila = pedido?.Where(x => x.Id.ToString().Equals(item.CodigoPedido)).FirstOrDefault();
+                    var pedidoFila = pedido?.FirstOrDefault(x => x.Id.ToString().Equals(item.CodigoPedido));
 
                     if (pedidoFila == null)
                         result.Data = new List<PedidoDto>();
@@ -104,7 +104,7 @@ namespace QuickOrderPedido.Application.UseCases
                         Observacao = pedidoFila.Observacao,
                         PedidoPago = pedidoFila.PedidoPago,
                         ValorPedido = pedidoFila.ValorPedido,
-                        ProdutoPedido = SetListaProdutos(pedidoFila?.Produtos),
+                        ProdutoPedido = SetListaProdutos(pedidoFila.Produtos),
                         StatusPedido = item.StatusPedido,
                         CarrinhoId = pedidoFila.CarrinhoId,
                     };

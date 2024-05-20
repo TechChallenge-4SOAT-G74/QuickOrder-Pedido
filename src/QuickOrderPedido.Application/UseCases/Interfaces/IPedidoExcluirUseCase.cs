@@ -5,6 +5,5 @@ namespace QuickOrderPedido.Application.UseCases.Interfaces
     public interface IPedidoExcluirUseCase
     {
         Task<ServiceResult> CancelarPedido(string codigoPedido, string statusPedido);
-        Task<ServiceResult> LimparCarrinho(string codigoPedido);
     }
 }
