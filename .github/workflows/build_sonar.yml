@@ -44,5 +44,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"TechChallenge-4SOAT-G74_QuickOrder-Pedido" /o:"techchallenge-4soat-g74" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           cd src
-          docker build -f QuickOrderPedido.Api/Dockerfile .
+          docker build -f QuickOrderPedido.Api/Dockerfile
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
