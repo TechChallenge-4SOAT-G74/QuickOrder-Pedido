@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -12,9 +13,9 @@ namespace QuickOrderPedido.Infra.MQ
     {
         private readonly string _nomeDaFila;
         private IModel _channel;
-        private IProcessaEvento _processaEvento;
-
-        public RabbitMqSub(IOptions<RabbitMqSettings> configuration, IProcessaEvento processaEvento)
+       // private IProcessaEvento _processaEvento;
+        public IServiceProvider Services { get; }
+        public RabbitMqSub(IServiceProvider services, IOptions<RabbitMqSettings> configuration)//, IProcessaEvento processaEvento)
         {
             var factory = new ConnectionFactory
             {
@@ -29,11 +30,10 @@ namespace QuickOrderPedido.Infra.MQ
             IConnection connection = factory.CreateConnection();
 
             _channel = connection.CreateModel();
-            _channel.ExchangeDeclare(exchange: "Pedido", type: ExchangeType.Fanout);
-
-            _nomeDaFila = _channel.QueueDeclare().QueueName;
-            _channel.QueueBind(queue: _nomeDaFila, exchange: "Pedido", routingKey: "");
-            _processaEvento = processaEvento;
+            _nomeDaFila = "Produto_Selecionado";
+            _channel.QueueBind(queue: _nomeDaFila, exchange: "Produto", routingKey: "");
+            Services = services;
+           // _processaEvento = processaEvento;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,12 +44,30 @@ namespace QuickOrderPedido.Infra.MQ
             {
                 ReadOnlyMemory<byte> body = ea.Body;
                 string? mensagem = Encoding.UTF8.GetString(body.ToArray());
-                _processaEvento.Processa(mensagem);
+                // _processaEvento.Processa(mensagem);
+                Console.Write(mensagem);
             };
 
             _channel.BasicConsume(queue: _nomeDaFila, autoAck: true, consumer: consumidor);
 
             return Task.CompletedTask;
+        }
+
+        private async Task DoWork(CancellationToken stoppingToken)
+        {
+            using (var scope = Services.CreateScope())
+            {
+                var scopedProcessingService =
+                    scope.ServiceProvider
+                        .GetRequiredService<IScopedProcessingService>();
+
+                await scopedProcessingService.DoWork(stoppingToken);
+            }
+        }
+
+        public override async Task StopAsync(CancellationToken stoppingToken)
+        {
+            await base.StopAsync(stoppingToken);
         }
     }
 }

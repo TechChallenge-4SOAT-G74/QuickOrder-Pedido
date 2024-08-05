@@ -17,6 +17,8 @@ namespace QuickOrderPedido.IoC
         {
             var assemblyTypes = typeof(RootBootstrapper).Assembly.GetNoAbstractTypes();
 
+            services.AddHostedService<RabbitMqSub>();
+            services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
             services.AddSingleton(typeof(IRabbitMqPub<>), typeof(RabbitMqPub<>));
             services.AddScoped<IProcessaEvento, ProcessaEvento>();
 
