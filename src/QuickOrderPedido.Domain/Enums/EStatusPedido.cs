@@ -35,7 +35,7 @@ namespace QuickOrderPedido.Domain.Enums
         CanceladoAtendimento = 10,
 
         [Description("Pagamento não aprovado")]
-        PagamentonaoAprovado = 11,
+        PagamentoNaoAprovado = 11,
 
         [Description("Pendente cancelamento")]
         PendenteCancelamento = 12
