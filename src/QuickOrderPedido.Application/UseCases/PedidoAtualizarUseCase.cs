@@ -1,10 +1,10 @@
 ﻿
 using QuickOrderPedido.Application.Dtos.Base;
+using QuickOrderPedido.Application.Events;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
 using QuickOrderPedido.Domain.Enums;
-using QuickOrderPedido.Infra.MQ;
 
 namespace QuickOrderPedido.Application.UseCases
 {
@@ -30,7 +30,8 @@ namespace QuickOrderPedido.Application.UseCases
             var result = new ServiceResult();
             try
             {
-                var carrinho = numeroCliente > 0 ? await _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
+                var carrinho = numeroCliente > 0 ? await  _carrinhoGateway.GetValue("NumeroCliente", numeroCliente) : new Carrinho();
+
 
                 if (carrinho == null)
                 {
@@ -169,7 +170,7 @@ namespace QuickOrderPedido.Application.UseCases
                     return result;
                 }
 
-                _rabbitMqPub.Publicar(pedido, "Atendimento", "Pedido_Confirmado");
+                _rabbitMqPub.Publicar(pedido, "Pedido", "Pedido_Confirmado");
             }
             catch (Exception ex)
             {

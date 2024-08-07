@@ -1,4 +1,4 @@
-﻿namespace QuickOrderPedido.Infra.MQ
+﻿namespace QuickOrderPedido.Application.Events
 {
     public interface IRabbitMqPub<T> where T : class
     {

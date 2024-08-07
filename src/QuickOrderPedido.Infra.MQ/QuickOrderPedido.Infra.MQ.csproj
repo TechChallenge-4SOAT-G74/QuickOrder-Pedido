@@ -16,6 +16,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\QuickOrderPedido.Application\QuickOrderPedido.Application.csproj" />
     <ProjectReference Include="..\QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj" />
   </ItemGroup>
   

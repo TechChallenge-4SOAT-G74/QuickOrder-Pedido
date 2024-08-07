@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -13,9 +12,9 @@ namespace QuickOrderPedido.Infra.MQ
     {
         private readonly string _nomeDaFila;
         private IModel _channel;
-       // private IProcessaEvento _processaEvento;
-        public IServiceProvider Services { get; }
-        public RabbitMqSub(IServiceProvider services, IOptions<RabbitMqSettings> configuration)//, IProcessaEvento processaEvento)
+        private readonly IProcessaEvento _processaEvento;
+        private readonly string _exchange = "QuickOrder";
+        public RabbitMqSub(IOptions<RabbitMqSettings> configuration, IProcessaEvento processaEvento)
         {
             var factory = new ConnectionFactory
             {
@@ -31,9 +30,8 @@ namespace QuickOrderPedido.Infra.MQ
 
             _channel = connection.CreateModel();
             _nomeDaFila = "Produto_Selecionado";
-            _channel.QueueBind(queue: _nomeDaFila, exchange: "Produto", routingKey: "");
-            Services = services;
-           // _processaEvento = processaEvento;
+            _channel.QueueBind(queue: _nomeDaFila, exchange: _exchange, routingKey: "Produto");
+            _processaEvento = processaEvento;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,30 +42,13 @@ namespace QuickOrderPedido.Infra.MQ
             {
                 ReadOnlyMemory<byte> body = ea.Body;
                 string? mensagem = Encoding.UTF8.GetString(body.ToArray());
-                // _processaEvento.Processa(mensagem);
+                _processaEvento.Processa(mensagem);
                 Console.Write(mensagem);
             };
 
             _channel.BasicConsume(queue: _nomeDaFila, autoAck: true, consumer: consumidor);
 
             return Task.CompletedTask;
-        }
-
-        private async Task DoWork(CancellationToken stoppingToken)
-        {
-            using (var scope = Services.CreateScope())
-            {
-                var scopedProcessingService =
-                    scope.ServiceProvider
-                        .GetRequiredService<IScopedProcessingService>();
-
-                await scopedProcessingService.DoWork(stoppingToken);
-            }
-        }
-
-        public override async Task StopAsync(CancellationToken stoppingToken)
-        {
-            await base.StopAsync(stoppingToken);
         }
     }
 }
