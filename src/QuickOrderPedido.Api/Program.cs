@@ -85,7 +85,7 @@ app.UseReDoc(c =>
 });
 
 app.RegisterPedidoController();
-app.RegisterHealthController();
+//app.RegisterHealthController();
 
 app.ConfigureHealthCheckEndpoints();
 

@@ -12,8 +12,8 @@ namespace QuickOrderPedido.Infra.MQ
     {
         private readonly string _nomeDaFila;
         private IModel _channel;
-        private IProcessaEvento _processaEvento;
-
+        private readonly IProcessaEvento _processaEvento;
+        private readonly string _exchange = "QuickOrder";
         public RabbitMqSub(IOptions<RabbitMqSettings> configuration, IProcessaEvento processaEvento)
         {
             var factory = new ConnectionFactory
@@ -29,10 +29,8 @@ namespace QuickOrderPedido.Infra.MQ
             IConnection connection = factory.CreateConnection();
 
             _channel = connection.CreateModel();
-            _channel.ExchangeDeclare(exchange: "Pedido", type: ExchangeType.Fanout);
-
-            _nomeDaFila = _channel.QueueDeclare().QueueName;
-            _channel.QueueBind(queue: _nomeDaFila, exchange: "Pedido", routingKey: "");
+            _nomeDaFila = "Produto_Selecionado";
+            _channel.QueueBind(queue: _nomeDaFila, exchange: _exchange, routingKey: "Produto");
             _processaEvento = processaEvento;
         }
 
@@ -45,6 +43,7 @@ namespace QuickOrderPedido.Infra.MQ
                 ReadOnlyMemory<byte> body = ea.Body;
                 string? mensagem = Encoding.UTF8.GetString(body.ToArray());
                 _processaEvento.Processa(mensagem);
+                Console.Write(mensagem);
             };
 
             _channel.BasicConsume(queue: _nomeDaFila, autoAck: true, consumer: consumidor);

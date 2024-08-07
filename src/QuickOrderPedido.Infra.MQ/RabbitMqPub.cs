@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using QuickOrderPedido.Application.Events;
 using RabbitMQ.Client;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -10,6 +11,7 @@ namespace QuickOrderPedido.Infra.MQ
     public class RabbitMqPub<T> : IRabbitMqPub<T> where T : class
     {
         private readonly IModel _channel;
+        private readonly string _exchange = "QuickOrder";
 
         public RabbitMqPub(IOptions<RabbitMqSettings> configuration)
         {
@@ -30,6 +32,8 @@ namespace QuickOrderPedido.Infra.MQ
 
         public void Publicar(T obj, string routingKey, string queue)
         {
+            _channel.ExchangeDeclare(exchange: _exchange, type: ExchangeType.Fanout);
+
             _channel.QueueDeclare(queue: queue,
                      durable: false,
                      exclusive: false,
@@ -39,7 +43,7 @@ namespace QuickOrderPedido.Infra.MQ
             string mensagem = JsonSerializer.Serialize(obj);
             var body = Encoding.UTF8.GetBytes(mensagem);
 
-            _channel.BasicPublish(exchange: "Pedido",
+            _channel.BasicPublish(exchange: _exchange,
                 routingKey: routingKey,
                 basicProperties: null,
                 body: body

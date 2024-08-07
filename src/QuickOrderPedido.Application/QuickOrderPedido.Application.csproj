@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuickOrderPedido.Domain\QuickOrderPedido.Domain.csproj" />
-    <ProjectReference Include="..\QuickOrderPedido.Infra.MQ\QuickOrderPedido.Infra.MQ.csproj" />
   </ItemGroup>
 
 </Project>
