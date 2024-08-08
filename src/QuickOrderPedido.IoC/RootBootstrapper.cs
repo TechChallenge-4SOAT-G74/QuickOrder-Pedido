@@ -32,7 +32,7 @@ namespace QuickOrderPedido.IoC
             services.AddSingleton<IPedidoAtualizarUseCase, PedidoAtualizarUseCase>();
             services.AddScoped<IPedidoExcluirUseCase, PedidoExcluirUseCase>();
             services.AddSingleton<IPedidoCriarUseCase, PedidoCriarUseCase>();
-            services.AddScoped<IPedidoObterUseCase, PedidoObterUseCase>();
+            services.AddSingleton<IPedidoObterUseCase, PedidoObterUseCase>();
 
 
         }

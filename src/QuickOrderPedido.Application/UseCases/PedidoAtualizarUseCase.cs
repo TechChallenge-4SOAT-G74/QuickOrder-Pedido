@@ -109,7 +109,7 @@ namespace QuickOrderPedido.Application.UseCases
 
                 await LimparCarrinho(pedido.ClienteId);
 
-
+                _rabbitMqPub.Publicar(pedido,"Atendimento","Pedido_Confirmado");
             }
             catch (Exception ex)
             {

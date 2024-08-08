@@ -44,9 +44,9 @@ namespace QuickOrderPedido.Infra.MQ
 
             if (pagamentoRecebido != null)
                 if (pagamentoRecebido.Status == EStatusPagamentoExtensions.ToDescriptionString(EStatusPagamento.Aprovado).ToString())
-                    _pedidoAtualizarUseCase.AlterarStatusPedido(pagamentoRecebido.CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Pago).ToString());
+                    _pedidoAtualizarUseCase.ConfirmarPagamentoPedido(pagamentoRecebido.CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Pago).ToString());
                 if (pagamentoRecebido.Status == EStatusPagamentoExtensions.ToDescriptionString(EStatusPagamento.Negado).ToString())
-                    _pedidoAtualizarUseCase.AlterarStatusPedido(pagamentoRecebido.CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.PagamentoNaoAprovado).ToString());
+                    _pedidoAtualizarUseCase.ConfirmarPagamentoPedido(pagamentoRecebido.CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.PagamentoNaoAprovado).ToString());
         }
     }
 }
