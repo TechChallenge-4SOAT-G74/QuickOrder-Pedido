@@ -2,6 +2,7 @@
 {
     public interface IProcessaEvento
     {
-        void Processa(string mensagem);
+        void ProcessaProduto(string mensagem);
+        void ProcessaPagamento(string mensagem);
     }
 }

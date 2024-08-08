@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+﻿using QQuickOrderPedido.Domain.Enums;
 using QuickOrderPedido.Application.Dtos;
-using QuickOrderPedido.Application.Events;
 using QuickOrderPedido.Application.UseCases.Interfaces;
 using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
+using QuickOrderPedido.Domain.Enums;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
@@ -15,15 +15,17 @@ namespace QuickOrderPedido.Infra.MQ
         private readonly ICarrinhoGateway _carrinhoGateway;
         private readonly IPedidoCriarUseCase _pedidoCriarUseCase;
         private readonly IPedidoAtualizarUseCase _pedidoAtualizarUseCase;
+        private readonly IPedidoObterUseCase _pedidoObterUseCase;
 
-        public ProcessaEvento(ICarrinhoGateway carrinhoGateway, IPedidoCriarUseCase pedidoCriarUseCase, IPedidoAtualizarUseCase pedidoAtualizarUseCase)
+        public ProcessaEvento(ICarrinhoGateway carrinhoGateway, IPedidoCriarUseCase pedidoCriarUseCase, IPedidoAtualizarUseCase pedidoAtualizarUseCase, IPedidoObterUseCase pedidoObterUseCase)
         {
             _carrinhoGateway = carrinhoGateway;
             _pedidoCriarUseCase = pedidoCriarUseCase;
             _pedidoAtualizarUseCase = pedidoAtualizarUseCase;
+            _pedidoObterUseCase = pedidoObterUseCase;
         }
 
-        public void Processa(string mensagem)
+        public void ProcessaProduto(string mensagem)
         {
             var peditoRecebido = JsonSerializer.Deserialize<ProdutoSelecionadoDto>(mensagem);
             Console.Write(peditoRecebido);
@@ -34,6 +36,17 @@ namespace QuickOrderPedido.Infra.MQ
                 _pedidoCriarUseCase.CriarPedido(peditoRecebido.IdCliente, produtoCarrinho);
             else
                 _pedidoAtualizarUseCase.AdicionarItemCarrinho(peditoRecebido.IdCliente, produtoCarrinho);
+        }
+
+        public void ProcessaPagamento(string mensagem)
+        {
+            var pagamentoRecebido = JsonSerializer.Deserialize<PagamentoDto>(mensagem);
+
+            if (pagamentoRecebido != null)
+                if (pagamentoRecebido.Status == EStatusPagamentoExtensions.ToDescriptionString(EStatusPagamento.Aprovado).ToString())
+                    _pedidoAtualizarUseCase.ConfirmarPagamentoPedido(pagamentoRecebido.CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.Pago).ToString());
+                if (pagamentoRecebido.Status == EStatusPagamentoExtensions.ToDescriptionString(EStatusPagamento.Negado).ToString())
+                    _pedidoAtualizarUseCase.ConfirmarPagamentoPedido(pagamentoRecebido.CodigoPedido, EStatusPedidoExtensions.ToDescriptionString(EStatusPedido.PagamentoNaoAprovado).ToString());
         }
     }
 }

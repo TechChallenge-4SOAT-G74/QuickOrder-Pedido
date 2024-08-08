@@ -1,4 +1,5 @@
-﻿using QuickOrderPedido.Application.Dtos.Base;
+﻿using QQuickOrderPedido.Domain.Enums;
+using QuickOrderPedido.Application.Dtos.Base;
 using QuickOrderPedido.Domain.Adapters;
 using QuickOrderPedido.Domain.Entities;
 
@@ -32,6 +33,11 @@ namespace QuickOrderPedido.Application.UseCases
                 pedido.StatusPedido = pedidoStatus;
                 pedido.DataAtualizacao = DateTime.Now;
                 _pedidoStatusGateway.Update(pedido);
+
+                if (pedidoStatus == EStatusPagamentoExtensions.ToDescriptionString(EStatusPagamento.Aprovado).ToString())
+                {
+
+                }
 
             }
             catch (Exception ex)

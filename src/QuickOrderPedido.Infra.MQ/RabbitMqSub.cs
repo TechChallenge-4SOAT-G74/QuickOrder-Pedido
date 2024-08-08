@@ -10,7 +10,7 @@ namespace QuickOrderPedido.Infra.MQ
     [ExcludeFromCodeCoverage]
     public class RabbitMqSub : BackgroundService
     {
-        private readonly string _nomeDaFila;
+        private string _nomeDaFila;
         private IModel _channel;
         private readonly IProcessaEvento _processaEvento;
         private readonly string _exchange = "QuickOrder";
@@ -27,23 +27,32 @@ namespace QuickOrderPedido.Infra.MQ
             };
 
             IConnection connection = factory.CreateConnection();
-
             _channel = connection.CreateModel();
-            _nomeDaFila = "Produto_Selecionado";
+            _nomeDaFila = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: _nomeDaFila, exchange: _exchange, routingKey: "Produto");
             _processaEvento = processaEvento;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
             EventingBasicConsumer? consumidor = new EventingBasicConsumer(_channel);
 
             consumidor.Received += (ModuleHandle, ea) =>
             {
                 ReadOnlyMemory<byte> body = ea.Body;
                 string? mensagem = Encoding.UTF8.GetString(body.ToArray());
-                _processaEvento.Processa(mensagem);
-                Console.Write(mensagem);
+
+                if (ea.RoutingKey == "Produto")
+                {
+                    _nomeDaFila = "Produto_Selecionado";
+                    _processaEvento.ProcessaProduto(mensagem);
+                }
+                if (ea.RoutingKey == "Pagamento")
+                {
+                    _nomeDaFila = "Pagamento_Selecionado";
+                    _processaEvento.ProcessaPagamento(mensagem);
+                }
             };
 
             _channel.BasicConsume(queue: _nomeDaFila, autoAck: true, consumer: consumidor);
