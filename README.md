@@ -102,7 +102,7 @@ Passo a passo - Instalação:
 
 <br />
 
-![image](https://github.com/user-attachments/assets/afafb905-0b61-4b16-9d91-3e380acca5d8)
+![image](https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Produto/assets/19378661/5c9c3b53-6a22-4996-a433-34e20cbd9376)
 
 
 
@@ -112,4 +112,5 @@ Passo a passo - Instalação:
 
 <br />
 
-![image](https://github.com/TechChallenge-4SOAT-G74/QuickOrder-Produto/assets/19378661/d3616035-b416-49ea-92ae-3360795ae189)
+![image](https://github.com/user-attachments/assets/3218e012-b918-4a21-9714-1f42e2e7b089)
+
