@@ -28,6 +28,7 @@ namespace QuickOrderPedido.Infra.MQ
 
             IConnection connection = factory.CreateConnection();
             _channel = connection.CreateModel();
+            _channel.ExchangeDeclare(exchange: _exchange, type: ExchangeType.Fanout);
             _nomeDaFila = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: _nomeDaFila, exchange: _exchange, routingKey: "Produto");
             _processaEvento = processaEvento;
